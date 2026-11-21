@@ -1,14 +1,18 @@
-# java-dsh-bridge
+# Java DSH Bridge — DeepSeek Harness Java SDK
 
 [简体中文](README.md) · **English**
 
-A community Java SDK and HTTP service for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). Java applications can call the SDK directly. Other clients can get a final JSON response over HTTP, stream run events with Server-Sent Events (SSE), or continue a conversation using the same session ID. The project uses JDK 21, Spring Boot 4.1.3, and Tomcat 11.0.29.
+Java DSH Bridge is a community Java SDK and HTTP/SSE bridge for [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/deepseek-harness). Java applications can run DSH through the SDK. Other applications can get a final JSON response over HTTP, stream run events with Server-Sent Events (SSE), and continue a conversation using the same session ID.
+
+[Quick start](#quick-start) · [HTTP API](#http-api) · [Java SDK](#standalone-sdk)
+
+The SDK uses Maven coordinates `cn.zntime.dsh.bridge:java-dsh-bridge-sdk:0.1.0`. It requires JDK 21 and has been tested with DeepSeek Harness [0.2.2-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-rc.2). See the [local SDK installation steps](RELEASE.en.md#install-the-sdk-locally).
 
 ## Quick start
 
-Follow the steps below to build from source. For binary ZIPs and local SDK installation, see the [v0.1.0 release notes](RELEASE.en.md). CI runs on Linux and macOS. Maven Wrapper also provides a Windows build entry point.
+[Download the v0.1.0 Bridge and SDK ZIPs](https://github.com/newind85/java-dsh-bridge/releases/tag/v0.1.0) or follow the steps below to build from source. The HTTP service uses Spring Boot 4.1.3 and Tomcat 11.0.29. CI runs on Linux and macOS. Maven Wrapper also provides a Windows build entry point.
 
-Use JDK 21 to build and run the Bridge. The Maven Wrapper downloads a pinned version of Maven. The tested DSH version is [0.2.2-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-rc.2). With Node.js 24.9 or later, run `npm install --global @deepseek-ai/dsh@0.2.2-rc.2`. You can also run `python -m pip install deepseek-harness-sdk==0.2.2rc2` in a virtual environment using Python 3.10 or later, then activate that environment to use its `dsh` command.
+The Maven Wrapper downloads a pinned version of Maven. With Node.js 24.9 or later, run `npm install --global @deepseek-ai/dsh@0.2.2-rc.2`. You can also run `python -m pip install deepseek-harness-sdk==0.2.2rc2` in a virtual environment using Python 3.10 or later, then activate that environment to use its `dsh` command.
 
 Set `DEEPSEEK_API_KEY` in the environment that will run the Bridge, then run the following commands from the project root. To build in Windows PowerShell, use `.\mvnw.cmd clean verify`. For credential setup, see the [DSH SDK guide](https://github.com/deepseek-ai/deepseek-harness/blob/dsh-v0.2.2-rc.2/docs/user/guide/python-sdk.md).
 

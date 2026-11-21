@@ -1,14 +1,18 @@
-# java-dsh-bridge
+# Java DSH Bridge — DeepSeek Harness Java SDK
 
 **简体中文** · [English](README.en.md)
 
-面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的社区 Java SDK 和 HTTP 服务。Java 程序可以直接调用 SDK，其他应用也可以通过 HTTP 获取最终 JSON、通过 SSE 接收运行事件，或使用同一会话 ID 继续对话。工程使用 JDK 21、Spring Boot 4.1.3 和 Tomcat 11.0.29。
+Java DSH Bridge 是 [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/deepseek-harness) 的社区 Java SDK 和 HTTP/SSE 桥接服务。Java 应用可以直接通过 SDK 调用 DSH，其他应用可以通过 HTTP 获取最终 JSON、通过 SSE 接收运行事件，并使用同一个会话 ID 继续对话。
+
+[快速开始](#快速开始) · [HTTP 接口](#http-接口) · [Java SDK](#独立-sdk)
+
+SDK 的 Maven 坐标为 `cn.zntime.dsh.bridge:java-dsh-bridge-sdk:0.1.0`。使用 JDK 21，已验证 DeepSeek Harness [0.2.2-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-rc.2)。参阅 [SDK 本地安装步骤](RELEASE.md#本地安装-sdk)。
 
 ## 快速开始
 
-从源码构建可按下方步骤操作。使用二进制 ZIP 或本地安装 SDK 可参阅 [v0.1.0 发布说明](RELEASE.md)。CI 在 Linux 和 macOS 上运行，Windows 提供 Maven Wrapper 构建入口。
+[下载 v0.1.0 的 Bridge 和 SDK ZIP](https://github.com/newind85/java-dsh-bridge/releases/tag/v0.1.0)，或按下方步骤从源码构建。HTTP 服务使用 Spring Boot 4.1.3 和 Tomcat 11.0.29。CI 在 Linux 和 macOS 上运行，Windows 提供 Maven Wrapper 构建入口。
 
-使用 JDK 21 构建并运行，Maven Wrapper 会下载固定版本的 Maven。已验证的 DSH 版本为 [0.2.2-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-rc.2)。使用 Node.js 24.9 或更高版本时，可执行 `npm install --global @deepseek-ai/dsh@0.2.2-rc.2`。也可以在 Python 3.10 或更高版本的虚拟环境中执行 `python -m pip install deepseek-harness-sdk==0.2.2rc2`，随后激活该环境以使用其中的 `dsh`。
+Maven Wrapper 会下载固定版本的 Maven。使用 Node.js 24.9 或更高版本时，可执行 `npm install --global @deepseek-ai/dsh@0.2.2-rc.2`。也可以在 Python 3.10 或更高版本的虚拟环境中执行 `python -m pip install deepseek-harness-sdk==0.2.2rc2`，随后激活该环境以使用其中的 `dsh`。
 
 在运行 Bridge 的环境中配置 `DEEPSEEK_API_KEY`，然后在项目根目录执行以下命令。Windows PowerShell 下构建时使用 `.\mvnw.cmd clean verify`。凭据配置见 [DSH SDK 指南](https://github.com/deepseek-ai/deepseek-harness/blob/dsh-v0.2.2-rc.2/docs/user/guide/python-sdk.zh.md)。
 
