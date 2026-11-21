@@ -2,9 +2,47 @@
 
 [简体中文](CONTRIBUTING.md) · **English**
 
-Use JDK 21 and run `./mvnw -B -ntp clean verify` from the repository root. In Windows PowerShell, use `.\mvnw.cmd -B -ntp clean verify`. The integration tests use a local mock DSH process to exercise HTTP, SSE, and stdio. You can run them without a DSH installation or model credentials.
+## Fork and create a branch
 
-In your pull request, describe the use case, what changed, and how you verified it. For DSH protocol changes, include the upstream version you tested and add a regression test with a redacted JSON-RPC exchange. When changing HTTP endpoints or configuration, update the examples and descriptions in both the [English README](README.en.md) and the [Chinese README](README.md).
+Open the [Java DSH Bridge repository](https://github.com/newind85/java-dsh-bridge) and click **Fork** to create a copy under your GitHub account. Replace `YOUR_USERNAME` with your GitHub username, then create a branch from upstream `main`.
+
+```sh
+git clone https://github.com/YOUR_USERNAME/java-dsh-bridge.git
+cd java-dsh-bridge
+git remote add upstream https://github.com/newind85/java-dsh-bridge.git
+git fetch upstream main
+git switch --no-track -c fix/example upstream/main
+```
+
+## Run tests locally
+
+Install JDK 21 and run the Maven Wrapper from the repository root. On Linux and macOS, run the following command.
+
+```sh
+./mvnw -B -ntp clean verify
+```
+
+In Windows PowerShell, run the following command.
+
+```powershell
+.\mvnw.cmd -B -ntp clean verify
+```
+
+The integration tests use a local mock DSH process to exercise HTTP, SSE, and stdio. You can run them without a DSH installation or model credentials. For DSH protocol changes, include the upstream version you tested and add a regression test with a redacted JSON-RPC exchange. When changing HTTP endpoints or configuration, update the examples and descriptions in both the [English README](README.en.md) and the [Chinese README](README.md).
+
+## Open a pull request
+
+1. Stage your changes, create a commit, and push it to your fork. Replace `path/to/changed-file` with the path to a file you changed.
+
+   ```sh
+   git add -- path/to/changed-file
+   git commit -m "Describe the change"
+   git push -u origin fix/example
+   ```
+
+2. In the upstream repository, open **Pull requests → New pull request → compare across forks**. Set the **base** to `newind85/java-dsh-bridge:main` and the **head** to the `fix/example` branch in your fork.
+3. Use the template to describe the use case, what changed, and the test commands and results. Link the related issue if there is one. To address feedback, commit and push to the same branch. GitHub updates the existing pull request.
+4. Check `verify (ubuntu-latest)` and `verify (macos-latest)` on the pull request. Workflows for first-time contributors may need a maintainer's approval to run. Both checks must pass before the pull request can be merged.
 
 ## Verify and package a release
 
