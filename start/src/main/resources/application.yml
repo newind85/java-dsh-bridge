@@ -1,0 +1,21 @@
+spring:
+  application:
+    # Spring Boot 应用名称，用于在应用日志中标识此服务。
+    name: java-dsh-bridge
+  threads:
+    virtual:
+      # 启用 Java 虚拟线程，供 Web 请求处理和应用任务执行器使用。
+      enabled: true
+
+server:
+  # HTTP 服务监听地址。127.0.0.1 是本机回环地址，仅供本机直接访问。
+  address: 127.0.0.1
+  # HTTP 服务监听端口，默认使用 8080。
+  port: 8080
+
+dsh:
+  bridge:
+    # DSH 子进程和新会话的初始工作目录。相对路径以 Java 应用的启动目录为基准。
+    working-directory: "."
+    # DSH 用户数据目录，用于存放配置、凭据和缓存。留空时沿用 DSH CLI 自身的规则。
+    dsh-home: ""

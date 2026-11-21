@@ -1,0 +1,36 @@
+name: Build and test
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify Maven reactor
+        run: ./mvnw -B -ntp clean verify
+      - name: Install the pinned DSH runtime
+        if: runner.os == 'Linux'
+        run: |
+          python3 -m venv "$RUNNER_TEMP/dsh-sdk"
+          "$RUNNER_TEMP/dsh-sdk/bin/python" -m pip install deepseek-harness-sdk==0.2.2rc2
+      - name: Smoke test the packaged Bridge with DSH
+        if: runner.os == 'Linux'
+        run: |
+          python3 scripts/smoke-test.py \
+            --jar start/target/java-dsh-bridge-*.jar \
+            --dsh "$RUNNER_TEMP/dsh-sdk/bin/dsh"
